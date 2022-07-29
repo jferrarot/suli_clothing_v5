@@ -1,5 +1,5 @@
 import { createContext, useState,useEffect } from "react";
-import { onAuthStateChangedListener, signOutUser } from "../utils/firebase/firebase.utils";
+import { createUserDocumentFromAuth, onAuthStateChangedListener} from "../utils/firebase/firebase.utils";
 
 //as the actual value you want to acess
 export const UserContext = createContext({
@@ -13,6 +13,9 @@ export const UserProvider = ({children})=>{
 
   useEffect(()=>{
     const unsubscribe = onAuthStateChangedListener((user)=>{
+      if(user){
+        createUserDocumentFromAuth(user);
+      }
       setCurrentUser(user);
     });
     return unsubscribe;
