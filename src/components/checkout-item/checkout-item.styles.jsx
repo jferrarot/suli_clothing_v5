@@ -19,18 +19,14 @@ export const Image = styled.div`
     }
 `;
 
-export const Name = styled.span`
+export const BaseSpan = styled.span`
     width: 23%;
 `;
 
-export const Quantity = styled.span`
-    width: 23%;
+export const Quantity = styled.span(BaseSpan)`
     display: flex;
 `;
 
-export const Price = styled.span`
-    width: 23%;
-`;
 export const Value = styled.span`
     margin: 0 10px;
 `;
