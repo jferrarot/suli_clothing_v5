@@ -7,7 +7,6 @@ import { CartContext } from '../../contexts/cart.context';
 
 import Button from '../button/button.component';
 
-import './cart-dropdown.styles.jsx';
 import {
     CartDropDownContainer,
     CartItems,

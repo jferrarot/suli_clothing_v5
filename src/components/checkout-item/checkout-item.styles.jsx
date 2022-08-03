@@ -9,7 +9,8 @@ export const CheckoutItemContainer = styled.div`
     font-size: 20px;
     align-items: center;
 `;
-export const Image = styled.div`
+
+export const ImageContainer = styled.div`
     width: 23%;
     padding-right: 15px;
 
@@ -23,16 +24,16 @@ export const BaseSpan = styled.span`
     width: 23%;
 `;
 
-export const Quantity = styled.span(BaseSpan)`
+export const Quantity = styled(BaseSpan)`
     display: flex;
-`;
-
-export const Value = styled.span`
-    margin: 0 10px;
 `;
 
 export const Arrow = styled.div`
     cursor: pointer;
+`;
+
+export const Value = styled.span`
+    margin: 0 10px;
 `;
 
 export const RemoveButton = styled.div`
