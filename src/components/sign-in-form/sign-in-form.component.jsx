@@ -1,96 +1,100 @@
-import {useState} from "react";
+import { useState } from 'react';
 
-import FormInput from "../form-input/form-input.component";
-import Button from "../button/button.component";
+import FormInput from '../form-input/form-input.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
-import {signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from "../../utils/firebase/firebase.utils";
+import {
+    signInAuthUserWithEmailAndPassword,
+    signInWithGooglePopup,
+} from '../../utils/firebase/firebase.utils';
 
-import './sign-in.styles.scss'
+import './sign-in.styles.scss';
 
 const defaultFormFields = {
-  email:'',
-  password:'',
-}
+    email: '',
+    password: '',
+};
 
+const SignInForm = () => {
+    const [formFields, setFormFields] = useState(defaultFormFields);
+    const { email, password } = formFields;
 
-const SignInForm = () =>{
+    const resetFormFields = () => {
+        setFormFields(defaultFormFields);
+    };
 
-  const [formFields,setFormFields] = useState(defaultFormFields);
-  const {email,password} = formFields;
+    const signInWithGoogle = async () => {
+        await signInWithGooglePopup();
+        // await createUserDocumentFromAuth(response.user);
+    };
 
-  const resetFormFields = ()=>{
-    setFormFields(defaultFormFields);
-  }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-  const signInWithGoogle = async() =>{
-    await signInWithGooglePopup();
-    // await createUserDocumentFromAuth(response.user);
-  };
+        try {
+            await signInAuthUserWithEmailAndPassword(email, password);
+            resetFormFields();
+        } catch (error) {
+            switch (error.code) {
+                case 'auth/wrong-password':
+                    alert('incorrect password for email');
+                    break;
+                case 'auth/user-not-found':
+                    alert('no user associated with this email');
+                    break;
+                case 'auth/weak-password':
+                    alert('password should be atleast 6 characters length');
+                    break;
+                default:
+                    console.log(error);
+            }
+        }
+    };
 
-  const handleSubmit = async (event) =>{
-    event.preventDefault();
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormFields({ ...formFields, [name]: value });
+    };
 
-    try {
-      await signInAuthUserWithEmailAndPassword(email,password);
-      resetFormFields();
-    }catch(error){
+    return (
+        <div className="sign-in-container">
+            <h2>Already have an account?</h2>
+            <span> Sign in with your email and password</span>
+            <form onSubmit={handleSubmit}>
+                <FormInput
+                    label="Email"
+                    inputOptions={{
+                        type: 'email',
+                        required: true,
+                        onChange: handleChange,
+                        name: 'email',
+                        value: email,
+                    }}
+                />
 
-      switch(error.code){
-        case 'auth/wrong-password':
-          alert('incorrect password for email');
-          break;
-        case 'auth/user-not-found':
-          alert('no user associated with this email')
-          break;
-        case 'auth/weak-password':
-          alert('password should be atleast 6 characters length')
-          break;
-        default:
-          console.log(error);
-      }
-    }
-
-  };
-
-  const handleChange = (event)=>{
-    const {name,value} = event.target;
-    setFormFields({...formFields,[name]:value});
-  };
-
-  return (
-    <div className="sign-in-container">
-      <h2>Already have an account?</h2>
-      <span> Sign in with your email and password</span>
-      <form onSubmit={handleSubmit}>
-
-        <FormInput
-          label='Email'
-          inputOptions = {{
-            type: 'email',
-            required: true,
-            onChange: handleChange,
-            name: 'email',
-            value: email
-          }}
-        />
-
-        <FormInput
-          label='Password'
-          inputOptions = {{
-            type: 'password',
-            required: true,
-            onChange: handleChange,
-            name: 'password',
-            value: password
-          }}
-        />
-        <div className="buttons-container">
-          <Button type='submit'>Sign In</Button>
-          <Button type='button' buttonType='google' onClick={signInWithGoogle}>Google sign in</Button>
+                <FormInput
+                    label="Password"
+                    inputOptions={{
+                        type: 'password',
+                        required: true,
+                        onChange: handleChange,
+                        name: 'password',
+                        value: password,
+                    }}
+                />
+                <div className="buttons-container">
+                    <Button type="submit">Sign In</Button>
+                    <Button
+                        type="button"
+                        buttonType={BUTTON_TYPE_CLASSES.google}
+                        onClick={signInWithGoogle}
+                    >
+                        Google sign in
+                    </Button>
+                </div>
+            </form>
         </div>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default SignInForm;
