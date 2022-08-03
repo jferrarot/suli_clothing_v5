@@ -17,7 +17,7 @@ const CartDropDown = () =>{
   const goToCheckoutHandler = () =>{
     setIsCartOpen(false);
     navigate('/checkout');
-  }
+  } 
 
   return (
     <div className='cart-dropdown-container'>
