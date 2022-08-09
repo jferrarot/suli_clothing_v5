@@ -14,17 +14,17 @@ import {
     NavLink,
     NavLinks,
 } from './navigation.styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../store/user/user.selector';
 import { selectIsCartOpen } from '../../store/cart/cart.selector';
+import { signOutStart } from '../../store/user/user.action';
 
 const Navigation = () => {
+    const dispatch = useDispatch();
     const currentUser = useSelector(selectCurrentUser);
     const isCartOpen = useSelector(selectIsCartOpen);
 
-    const signOutHandler = async () => {
-        await signOutUser();
-    };
+    const signOutHandler = () => dispatch(signOutStart());
 
     return (
         <Fragment>
