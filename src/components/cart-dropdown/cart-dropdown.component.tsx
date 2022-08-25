@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import CartItem from '../cart-item/cart-item.component';
@@ -12,13 +13,17 @@ import { setIsCartOpen } from '../../store/cart/cart.action';
 const CartDropDown = () => {
     const cartItems = useSelector(selectCartItems);
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
 
-    const goToCheckoutHandler = () => {
+    const goToCheckoutHandler = useCallback(() => {
         dispatch(setIsCartOpen(false));
         navigate('/checkout');
-    };
+    }, []);
+
+    // const goToCheckoutHandler = () => {
+    //     dispatch(setIsCartOpen(false));
+    //     navigate('/checkout');
+    // };
 
     return (
         <CartDropDownContainer>
