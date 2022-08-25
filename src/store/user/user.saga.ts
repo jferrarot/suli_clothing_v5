@@ -20,7 +20,6 @@ import {
     createUserDocumentFromAuth,
     signInWithGooglePopup,
     signInAuthUserWithEmailAndPassword,
-    createAuthUserWithEmailAndPassword,
     signOutUser,
     AdditionalInformation,
 } from '../../utils/firebase/firebase.utils';

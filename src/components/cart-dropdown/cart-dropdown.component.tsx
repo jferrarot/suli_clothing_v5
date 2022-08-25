@@ -4,11 +4,7 @@ import CartItem from '../cart-item/cart-item.component';
 
 import Button from '../button/button.component';
 
-import {
-    CartDropDownContainer,
-    CartItems,
-    EmptyMessage,
-} from './cart-dropdown.styles.jsx';
+import { CartDropDownContainer, CartItems, EmptyMessage } from './cart-dropdown.styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCartItems } from '../../store/cart/cart.selector';
 import { setIsCartOpen } from '../../store/cart/cart.action';
@@ -28,9 +24,7 @@ const CartDropDown = () => {
         <CartDropDownContainer>
             <CartItems>
                 {cartItems.length > 0 ? (
-                    cartItems.map((item) => (
-                        <CartItem key={item.id} cartItem={item}></CartItem>
-                    ))
+                    cartItems.map((item) => <CartItem key={item.id} cartItem={item}></CartItem>)
                 ) : (
                     <EmptyMessage>Your cart is empty</EmptyMessage>
                 )}

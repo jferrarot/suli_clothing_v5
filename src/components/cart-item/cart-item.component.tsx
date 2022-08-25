@@ -1,11 +1,11 @@
-import {
-    CartItemContainer,
-    ItemDetails,
-    Name,
-    Price,
-} from './cart-item.styles';
+import { CartItem as CI } from '../../store/cart/cart.types';
+import { CartItemContainer, ItemDetails, Name, Price } from './cart-item.styles';
 
-const CartItem = ({ cartItem }) => {
+type CartItemProps = {
+    cartItem: CI;
+};
+
+const CartItem = ({ cartItem }: CartItemProps) => {
     const { name, imageUrl, price, quantity } = cartItem;
     return (
         <CartItemContainer>
